@@ -60,7 +60,7 @@ uint8_t leftArrow[8] = {
 	0b00000,
 	};
 
-//LCD_I2C lcd(I2C_SDA, I2C_SCL, 0x27, LCD16x2); // SDA, SCL, device address, LCD type
+//LCD_I2C lcd(I2C_SDA, I2C_SCL, LCD16x2, 0x27); // SDA, SCL, device address, LCD type
 LCDi2c lcd(I2C_SDA, I2C_SCL);
 
 int main() {
@@ -146,7 +146,8 @@ following display types are supported
 create a LCD object
 
 ```ccp
-LCDi2c::LCDi2c(PinName sda, PinName scl, int deviceAddress = 0x27, lcd_t type = LCD16x2);
+LCDi2c::LCDi2c(PinName sda, PinName scl, lcd_t type = LCD16x2, int deviceAddress = 0x27);
+LCDi2c::LCDi2c(lcd_t type, int deviceAddress = 0x27);
 ```
 
 - **sda** I2C SDA pin
@@ -158,6 +159,7 @@ LCDi2c::LCDi2c(PinName sda, PinName scl, int deviceAddress = 0x27, lcd_t type = 
 
 ```cpp
 LCDi2c lcd(I2C_SDA, I2C_SCL);
+LCDi2c lcd(LCD16x2); // using standard I2C pins I2C_SDA, I2C_SCL
 ```
 
 ## Class Functions

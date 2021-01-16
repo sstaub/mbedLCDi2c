@@ -24,9 +24,19 @@
 #include "LCDi2c.h"
 #include "mbed.h"
 
-LCDi2c::LCDi2c(PinName sda, PinName scl, int deviceAddress, lcd_t type) : i2c(sda, scl) {
+LCDi2c::LCDi2c(lcd_t type, int deviceAddress) : i2c(I2C_SDA, I2C_SCL) {
 	this->deviceAddress = deviceAddress << 1; // convert 7bit address to mbed 8bit address
 	this->type = type;
+	init();
+	}
+
+LCDi2c::LCDi2c(PinName sda, PinName scl, lcd_t type, int deviceAddress) : i2c(sda, scl) {
+	this->deviceAddress = deviceAddress << 1; // convert 7bit address to mbed 8bit address
+	this->type = type;
+	init();
+	}
+
+void LCDi2c::init() {
 	displayfunction = LCD_4BIT_MODE | LCD_2_LINE | LCD_5x8DOTS;
 	sendI2C(backlight);
   write4bits(0x03 << 4);
@@ -45,10 +55,6 @@ LCDi2c::LCDi2c(PinName sda, PinName scl, int deviceAddress, lcd_t type) : i2c(sd
 	displaymode = LCD_ENTRY_LEFT | LCD_ENTRY_SHIFT_DECREMENT;
 	writeCommand(LCD_ENTRY_MODE_SET | displaymode);
 	home();
-	}
-
-void LCDi2c::test() {
-	printf("i2c address: %d\n", deviceAddress);
 	}
 
 void LCDi2c::cls() {

@@ -145,9 +145,8 @@ class LCDi2c : public Stream {
 		 * @param deviceAddress I2C device address
 		 * @param type LCD size(default = LCD16x2)
 		 */
-		LCDi2c(PinName sda, PinName scl, int deviceAddress = 0x27, lcd_t type = LCD16x2);
-
-		void test();
+		LCDi2c(PinName sda, PinName scl, lcd_t type = LCD16x2, int deviceAddress = 0x27);
+		LCDi2c(lcd_t type, int deviceAddress = 0x27);
 
 		/**
 		 * @brief Clear the screen and locate to 0,0
@@ -215,7 +214,8 @@ class LCDi2c : public Stream {
 		// Stream implementation functions
 		virtual int _putc(int value);
 		virtual int _getc();
-		
+
+		void init();		
 		uint8_t rows();
 		uint8_t columns();
 		uint8_t address(uint8_t column, uint8_t row);
