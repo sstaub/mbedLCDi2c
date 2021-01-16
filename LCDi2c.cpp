@@ -38,7 +38,6 @@ LCDi2c::LCDi2c(PinName sda, PinName scl, lcd_t type, int deviceAddress) : i2c(sd
 
 void LCDi2c::init() {
 	displayfunction = LCD_4BIT_MODE | LCD_2_LINE | LCD_5x8DOTS;
-	sendI2C(backlight);
   write4bits(0x03 << 4);
   wait_us(4500);
   write4bits(0x03 << 4);
@@ -55,6 +54,7 @@ void LCDi2c::init() {
 	displaymode = LCD_ENTRY_LEFT | LCD_ENTRY_SHIFT_DECREMENT;
 	writeCommand(LCD_ENTRY_MODE_SET | displaymode);
 	home();
+	display(BACKLIGHT_ON);
 	}
 
 void LCDi2c::cls() {
